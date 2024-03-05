@@ -80,12 +80,7 @@ titanic_df.info()
 
 """Now we know that if the Alone column is anything but 0, then the passenger had family aboard and wasn't alone. So let's change the column now so that if the value is greater than 0, we know the passenger was with his/her family, otherwise they were alone."""
 
-# Convert 'Alone' column to numeric type
-titanic_df['Alone'] = pd.to_numeric(titanic_df['Alone'], errors='coerce')
-
 # Look for >0 or ==0 to set alone status
-
-
 
 titanic_df['Alone'].loc[titanic_df['Alone'] >0 ] = 'With family'
 titanic_df['Alone'].loc[titanic_df['Alone'] ==0] = 'Alone'
@@ -95,4 +90,16 @@ titanic_df
 
 # Now let's get a simple visualization!
 sns.catplot(data=titanic_df, x='Alone', palette='Blues', kind='count')
+
+Great work! Now that we've throughly analyzed the data let's go ahead and take a look at the most interesting (and open-ended) question: What factors helped someone survive the sinking?
+
+# Let's start by creating a new column for legibility purposes through mapping (Lec 36)
+titanic_df["Survivor"] = titanic_df.Survived.map({0: "no", 1: "yes"})
+
+# Let's just get a quick overall view of survived vs died. 
+sns.catplot(data=titanic_df, x='Survivor', palette='Set1', kind='count')
+
+So quite a few more people died than those who survived. Let's see if the class of the passengers had an effect on their survival rate, since the movie Titanic popularized the notion that the 3rd class passengers did not do as well as their 1st and 2nd class counterparts.
+
+
 
